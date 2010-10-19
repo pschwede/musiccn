@@ -1,0 +1,342 @@
+/** main colors
+
+#005aa8     main blue
+#acf        high blue
+#e3f0fc        text color
+#fff        text color in menu
+#fff        text color in headers
+#000        background
+
+*/
+
+
+html, body {
+	height: 100%;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+}
+
+body * {
+	margin: 0;
+	border: none;
+}
+
+ul {
+    list-style: none;
+}
+
+body,
+#player_control, 
+.track .title   {
+    background: #000;
+}
+
+body {
+	color: #e3f0fc;
+	font-family: Verdana, sans;
+	text-decoration:none;
+	vertical-align: middle;
+	font-size: 12pt;
+}
+
+a,
+a:link,
+a:visited {
+	color:#e3f0fc;
+	text-decoration: none;
+    cursor: pointer;
+}
+a:hover{
+	color:#adf;
+}
+a img{
+	border: hidden;
+}
+a div,
+a:link div h1,
+a:hover div,
+a:visited div{
+	color:#a84;
+	text-decoration:none;
+}
+
+input[type=text],
+input[type=password] {
+	color: #666;
+	border: 1px solid #666;
+}
+input[type=text]:hover,
+input[type=password]:hover {
+	color: #000;
+}
+input[type=text]:focus,
+input[type=password]:focus {
+	color: #000;
+	border: 1px solid #000;
+}
+
+input[type=submit], input[type=reset], select, button{
+	cursor: pointer;
+	color: #000;
+	background-color: #ddd;
+	border-top: 1px solid #eee;
+	border-right: 1px solid #eee;
+	border-left: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+}
+input[type=submit]:hover, input[type=reset]:hover, button:hover{
+	color: #ccc;
+	background-color: #eee;
+	border-top: 1px solid #fff;
+	border-right: 1px solid #fff;
+	border-left: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+}
+
+dt {
+	margin-left: 2ex;
+}
+dd {
+	margin-left: 4ex;
+}
+
+div {
+    float: left;
+}
+
+p {
+	margin: 10px 5px;
+}
+h1 {
+	margin: 0px;
+	background: #005aa8;
+	color: #fff;
+}
+h3 {
+	margin: 0px;
+	padding-left:5px;
+	background: #4379a8;
+	color: #fff;
+}
+
+.stripe {
+    width: 100%;
+    border-left: 0 hidden;
+    border-right: 0 hidden;
+    border-top: 1px solid #005aa8;
+    border-bottom: 1px solid #005aa8;
+    /*padding: 5px 0 5px 0;*/
+}
+.box {
+	margin: 10px 10px;
+	overflow:visible;
+	border: 1px solid #005aa8;
+}
+.box .box,
+.stripe .stripe,
+.box .stripe,
+.stripe .box {
+	border: none;
+}
+.box p,
+.stripe p {
+    margin-left: 5px;
+    margin-top:24px;
+}
+.box .highlighted {
+	background:#abf;
+}
+
+.box.left,
+.box.right {
+	margin-top: 24px;
+	border: 1px solid #abf;
+}
+
+#playlist {
+    width:100%;
+}
+
+#album_cover_box {
+    width: 20%;
+    max-height: 100px;
+}
+#player_interface{
+    background: transparent repeat-y left top;
+    height: 100px;
+}
+#player_control {
+    margin-left: 20%;
+    width: 80%;
+    height: 100%;
+}
+#song_title, 
+#total_time, 
+#player_pps, 
+#player_volume {
+    width:100%;
+    text-align: left;
+}
+#album_cover_box img {
+}
+
+.track {
+    display:block;
+	float: left;
+    background: transparent fixed repeat-y left center;
+    border: none;
+}
+.track .title {   
+    width: 80%;
+    margin-left: 20%;
+}
+
+.head {
+	margin-top: 5px;
+	font-size:28px;
+	float:none;
+	text-align:left;
+	height:32px;
+	background: transparent url("img/headlogo.png") no-repeat left center;
+	color: #08f;
+	border:0 hidden;
+	margin-bottom:0px;
+	overflow:hidden;
+}
+.head a,
+.head a:link,
+.head a:visited{
+    padding-left:32px;
+	text-decoration: none;
+	font-size:27px;
+	font-weight: bold;
+	color: #005aa8;
+}
+
+input, label{
+    display: block;
+}
+
+.box.topmost {
+	margin-top:0px;
+}
+div.menu {
+	/*height: 18px;*/
+	font-size:16px;
+	background: #005aa8;
+	margin-top:0px;
+	border-top:1px solid #005aa8;
+	border-bottom:1px solid #005aa8;
+}
+div.menu,
+div.menu a,
+div.menu a:link,
+div.menu a:visited {
+	color: #fff;
+	font-weight: bold;
+	font-size: 16px;
+}
+div.menu a:hover {
+	color: #fff;
+	text-decoration: underline;
+}
+div.menu ul {
+    padding-left: 32px;
+}
+ul.sf-menu li {
+    height: 100%;
+    padding: 2px 8px 2px 8px;
+}
+ul.sf-menu li ul li{
+    background-color: #005aa8;
+}
+
+.right {
+	float:right;
+	width:25%;
+}
+
+.cloud {
+	overflow:auto;
+	text-align:center;
+}
+.cloud a:link,
+.cloud a:visited {
+	color: #4379a8;
+}
+.cloud a:hover {
+	color: #213b52;
+}
+
+.left {
+	float: left;
+	width:74%;
+}
+
+.footer {
+	float: right;
+	width:100%;
+	text-align:center;
+	font-size: 9pt;
+}
+
+.alert {
+	color: #ccc;
+}
+
+div.album {
+	border: 1px solid #4379a8;
+	text-align: center;
+	margin: 3px;
+	height: 124px;
+	width: 100px;
+	padding: 2px;
+	overflow: hidden;
+	float: left;
+	font-size: 9px;
+	text-decoration: none;
+}
+div.album img {
+	height: 100px;
+	width: 100px;
+	border: 0 hidden;
+	padding:0px;
+}
+div.album:hover {
+	border: 1px solid #fff;
+	background-color: #4379a8;
+	color: #fff;
+}
+div.album span {
+	color: #4379a8;
+}
+div.album:hover span {
+	color: #fff;
+}
+
+hr {
+	border-color:#fff;
+	height:1px;
+	width:100%;
+}
+
+.alert{
+	cursor: pointer;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	border-bottom: 1px solid #ee6;
+	background-color: #ff9;
+	color: #000;
+	z-index: 99;
+}
+
+.explorer .list {
+    width: 31%;
+    padding: 1%;
+}
+.explorer .list a {
+    width: 100%;
+}
