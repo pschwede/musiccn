@@ -15,21 +15,21 @@ function set_album(name) {
 }
 
 function length_assist(num) {
-	$("#jplr1").onProgressChange( function(lp,ppr,ppa,pt,tt) {
+	$("#jplr1").jPlayer("onProgressChange", function(lp,ppr,ppa,pt,tt) {
 		$("#length"+num).attr("value", (lp<100?lp+"% wait..":Math.ceil(tt/1000)));
 	});
-	$("#jplr1").setFile($("#url"+num).attr("value")).play();
+	$("#jplr1").jPlayer("setFile", $("#url"+num).attr("value")).jPlayer("play");
 }
 
 function length_assist_all(num) {
 	maxnum = <?php echo count($tracks); ?>;
-	$("#jplr1").onProgressChange( function(lp,ppr,ppa,pt,tt) {
+	$("#jplr1").jPlayer("onProgressChange", function(lp,ppr,ppa,pt,tt) {
 		$("#length"+num).attr("value", (lp<100?lp+"% wait..":Math.ceil(tt/1000)));
 		if(lp>=100 && maxnum >= num+1){
 			length_assist_all(num+1);
 		}
 	});
-	$("#jplr1").setFile($("#url"+num).attr("value")).play();
+	$("#jplr1").jPlayer("setFile", $("#url"+num).attr("value")).jPlayer("play");
 } 
 //-->
 </script>

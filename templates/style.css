@@ -93,6 +93,11 @@ h3 {
 	padding-left:-10px;
 }
 
+.title a {
+  margin-left: 10px;
+  text-align: center;
+}
+
 #playlist {
     width:100%;
 }
@@ -106,9 +111,10 @@ h3 {
     height: 100px;
 }
 #player_control {
-    margin-left: 20%;
+    margin-left: 100px;
     width: 80%;
     height: 100%;
+    padding-left: 20px;
 }
 #song_title, 
 #total_time {
@@ -141,7 +147,8 @@ h3 {
 }
 .track .title {   
     width: 80%;
-    margin-left: 20%;
+    margin-left: 100px;
+    padding-left: 20px;
 }
 
 .head {

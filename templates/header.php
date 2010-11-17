@@ -154,7 +154,7 @@
                 '<div style="'+(skipped?'text-decoration: line-through; ':'')+'display:none;" id="'+track.id+'" class="track stripe">'+
                 '<div class="title">'+
                 track.artist+" - "+track.title+
-                '<a href="javascript:replay('+track.id+');">&#9851;</a><a href="'+track.via+'" target="_blank">(website)</a>'+
+                '<a href="javascript:replay('+track.id+');" title="Replay">&#9851;</a><a href="'+track.via+'" target="_blank" title="Website">&#8984;</a>'+
                 '</div></div>'+"\n"
                 );
             $('#playlist > .track:first').css('background-image','url('+track.cover+')').slideDown('slow');
@@ -190,7 +190,7 @@
                   autorequest();
                 }
             });
-            setTimeout("reactOnHangUp(" + $("#jplr"+player).jPlayer("getData", "diag.playedTime") + "," + player + ")", 3000);
+            setTimeout("reactOnHangUp(" + $("#jplr"+player).jPlayer("getData", "diag.playedTime") + "," + player + ")", 4000);
         } else {            
             $("#jplr"+player).jPlayer("onProgressChange", function(lp,ppr,ppa,pt,tt) {})
             .jPlayer("onSoundComplete", function() {});

@@ -14,7 +14,7 @@
     <title>Musiccn v1.0 - The different free music discovery machine</title>
     <script type="text/javascript" src="js/jquery-1.3.1.min.js"></script>
     <script type="text/javascript" src="js/superfish.js"></script>
-    <script type="text/javascript" src="js/jquery.jplayer.js"></script>
+    <script type="text/javascript" src="js/jquery.jplayer.min.js"></script>
     <script type="text/javascript">
     $("document").ready(function() {
             $("#jplr1").jPlayer({
