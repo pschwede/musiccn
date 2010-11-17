@@ -4,62 +4,35 @@
             Mood
             <ul>
                 <li>
-                    You are in <i>
-                    <?php switch($_SESSION['speed']) {
-                    case 1: 
-                        switch($_SESSION['energy']) {
-                        case -1:    echo 'angry'; break;
-                        case 0:     echo 'jaunty'; break;
-                        case 1:     echo 'party'; break;
-                        } 
-                        break;
-                    case 0:
-                        switch($_SESSION['energy']) {
-                        case -1:    echo 'melancholic'; break;
-                        case 0:     echo 'neutral'; break;
-                        case 1:     echo 'happy'; break;
-                        } 
-                        break;
-                    case -1:
-                        switch($_SESSION['energy']) {
-                        case -1:    echo 'sad'; break;
-                        case 0:     echo 'relaxing'; break;
-                        case 1:     echo 'mellow'; break;
-                        } 
-                        break;
-                    }
-                    ?></i> mood now.
-                </li>
-                <li>
                     <div style="width:22em;" id="mood_menu">
                         <div style="width:33%;">
-                            <a href="?a=setmood&energy=-1&speed=1">angry</a>
+                            <a href="javascript:setmood(-1,1);">angry</a>
                         </div>
                         <div style="width:33%;">
-                            <a href="?a=setmood&energy=0&speed=1">jaunty</a>
+                            <a href="javascript:setmood(0,1);">jaunty</a>
                         </div>
                         <div style="width:33%;">
-                            <a href="?a=setmood&energy=1&speed=1">party</a>
-                        </div>
-                        
-                        <div style="width:33%;">
-                            <a href="?a=setmood&energy=-1&speed=0">melancholic</a>
-                        </div>
-                        <div style="width:33%;">
-                            <a href="?a=setmood&energy=0&speed=0">neutral</a>
-                        </div>
-                        <div style="width:33%;">
-                            <a href="?a=setmood&energy=1&speed=0">happy</a>
+                            <a href="javascript:setmood(1,1);">party</a>
                         </div>
                         
                         <div style="width:33%;">
-                            <a href="?a=setmood&energy=-1&speed=-1">sad</a>
+                            <a  href="javascript:setmood(-1,0);">melancholic</a>
                         </div>
                         <div style="width:33%;">
-                            <a href="?a=setmood&energy=0&speed=-1">relaxing</a>
+                            <a  href="javascript:setmood(0,0);">neutral</a>
                         </div>
                         <div style="width:33%;">
-                            <a href="?a=setmood&energy=1&speed=-1">mellow</a>
+                            <a  href="javascript:setmood(1,0);">happy</a>
+                        </div>
+                        
+                        <div style="width:33%;">
+                            <a href="javascript:setmood(-1,-1);">sad</a>
+                        </div>
+                        <div style="width:33%;">
+                            <a href="javascript:setmood(0,-1);">relaxing</a>
+                        </div>
+                        <div style="width:33%;">
+                            <a href="javascript:setmood(1,-1);">mellow</a>
                         </div>
                     </div>
                 </li>
@@ -69,13 +42,13 @@
             Genre
             <ul>
                 <li>
-                    <a href="?a=setgenre&g=rock">Rock</a>
+                    <a id="setGenreRock">Rock</a>
                 </li>
                 <li>
-                    <a href="?a=setgenre&g=electro">Electronical</a>
+                    <a id="setGenreElectro">Electro</a>
                 </li>
                 <li>
-                    <a href="?a=setgenre&g=.">Any</a>
+                    <a id="setGenreAny">Any</a>
                 </li>
             </ul>
         </li>

@@ -131,7 +131,7 @@ if($_SESSION['online']) {
         } else {
             $alert = "Unsuccessful! Only $i tracks added.";
         }
-			} else $alert = "Unsuccessful! Wrong answer to antibot question.";
+			} else $alert = "Unsuccessful! Wrong answer to antibot question. (".$_POST['answer']."==".$_POST['question'].")";
         include("templates/staffheader.php");
         include("templates/staff_menu.php");
         include("templates/staff.php");

@@ -15,8 +15,6 @@ case 'setmood':
     $_GET['speed'] = max(-1,min(1,$_GET['speed']));
     $_SESSION['energy'] = $_GET['energy'];
     $_SESSION['speed'] = $_GET['speed'];
-case 'setgenre':
-    $_SESSION['genre'] = $_GET['g'];
 default:
     include("templates/header.php");
     include("templates/index.php");

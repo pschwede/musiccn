@@ -8,33 +8,7 @@
     <meta name="keywords" content="radio, web, flash, music, stream, free, content, creative, commons, jamendo, request, dj, music" />
     <meta name="date" content="2009-03-01" />
     <link rel="stylesheet" type="text/css" href="templates/style.css" media="screen" />
-    <?php
-    $style = "style";
-    switch($_SESSION['speed']) {
-    case 1: 
-        switch($_SESSION['energy']) {
-        case -1:    $style = 'angry'; break;
-        case 0:     $style = 'neutral'; break;
-        case 1:     $style = 'happy'; break; //partyyy
-        } 
-        break;
-    case 0:
-        switch($_SESSION['energy']) {
-        case -1:    $style = 'sad'; break;
-        case 0:     $style = 'neutral'; break;
-        case 1:     $style = 'happy'; break;
-        } 
-        break;
-    case -1:
-        switch($_SESSION['energy']) {
-        case -1:    $style = 'sad'; break;
-        case 0:     $style = 'sad'; break;  // relaxing
-        case 1:     $style = 'happy'; break;
-        } 
-        break;
-    }
-    echo '<link rel="stylesheet" type="text/css" href="templates/'.$style.'.css" media="screen" />';
-    ?>
+    <link rel="stylesheet" type="text/css" href="templates/neutral.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="templates/player.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="templates/superfish.css" media="screen" />
     <title>Musiccn v1.0 - The different free music discovery machine</title>
@@ -260,6 +234,23 @@
         setTimeout('updateMessages();',600);
     }
     
+    function setmood(energy, speed) {
+      $.ajax({
+        type:       'GET',
+        url:        'ajax.php',
+        datatype:   'text',
+        data:       'a=setmood&energy='+energy+'&speed='+speed,
+        success:    function(msg) {
+                $('#alert').text("You are in a "+msg+" mood now.").slideDown('slow');
+                setTimeout("$('#alert').slideUp('slow')", 3000);
+                if(currplayer == 1)
+                  crossFade(1,2);
+                else
+                  crossFade(2,1);
+        }
+      });
+    }
+    
     $("document").ready(function() {
         
         $("ul.sf-menu").superfish({
@@ -308,6 +299,43 @@
         $("#player_volume_down").click(function() {
             fade(currvolume,Math.max(0,currvolume-10),5,currplayer);
             currvolume=Math.max(0,currvolume-10);
+        })
+        
+        $("#setGenreRock").click(function() {
+            $.ajax({
+                type:       'GET',
+                url:        'ajax.php',
+                datatype:   'text',
+                data:       'a=setgenre&g=(rock|metal)',
+                success:    function(msg) {
+                        $('#alert').text("You are listening to Rock now! ").slideDown('slow');
+                        setTimeout("$('#alert').slideUp('slow')", 3000);
+                }
+            });
+        })
+        $("#setGenreElectro").click(function() {
+            $.ajax({
+                type:       'GET',
+                url:        'ajax.php',
+                datatype:   'text',
+                data:       'a=setgenre&g=(electro|idm|ance|hop)',
+                success:    function(msg) {
+                        $('#alert').text("You are listening to Electro now! ").slideDown('slow');
+                        setTimeout("$('#alert').slideUp('slow')", 3000);
+                }
+            });
+        })
+        $("#setGenreAny").click(function() {
+            $.ajax({
+                type:       'GET',
+                url:        'ajax.php',
+                datatype:   'text',
+                data:       'a=setgenre&g=.',
+                success:    function(msg) {
+                        $('#alert').text("You are listening to any genre now! ").slideDown('slow');
+                        setTimeout("$('#alert').slideUp('slow')", 3000);
+                }
+            });
         })
         
         setTimeout('$("#alert").hide("slow");',5000);

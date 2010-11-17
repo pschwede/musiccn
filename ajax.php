@@ -10,6 +10,10 @@ switch($_GET['a']) {
 case 'listened':
     if($_GET['trackid']) {
         $track = new Track(null, $_GET["trackid"]);
+        /*if($track->getValue('adder')) {
+            $user = new User(null, $track->getValue('adder'));
+            $user->incValueBy('rating',1) or die(-1);
+        }*/
         if($track->getValue('forcedbydj')) {
             $user = new User(null, $track->getValue('forcedbydj'));
             $user->incValueBy('rating',1) or die(-1);
@@ -117,22 +121,57 @@ case 'force':
             echo $query;
     } else echo $query;
     break;
-default:
-    if(empty($track) && mt_rand(0,1)) {
-				// Get conform music which is forced by dj and is in time
-				$query = "genre REGEXP '.*".$_GET["genre"].".*'";
-				if($_GET["energy"]!=0)
-						$query .= " and energy".(intval($_GET['energy'])>0?'>':'<')."0 ";
-				if($_GET["speed"]!=0)
-						$query .= " and speed".(intval($_GET['speed'])>0?'>':'<')."0 ";
-				$query .= " and forcedbydj>0 and".
-						" timeforced+duration>".time()." and".
-						" ".time().">timeforced ORDER BY timeforced ASC LIMIT 1";
-				$track = $db->queryArray("SELECT * FROM track WHERE ".$query);
-				if(isset($track))
-						$track["debug"] = "forced";
+case 'setgenre':
+    $_SESSION["genre"] = $_GET["g"];
+    echo 1;
+    break;
+case 'setmood':
+    $_SESSION["speed"] = $_GET["speed"];
+    $_SESSION["energy"] = $_GET["energy"];
+    switch($_SESSION['speed']) {
+    case 1: 
+        switch($_SESSION['energy']) {
+        case -1:    echo 'angry'; break;
+        case 0:     echo 'jaunty'; break;
+        case 1:     echo 'party'; break; //partyyy
+        } 
+        break;
+    case 0:
+        switch($_SESSION['energy']) {
+        case -1:    echo 'melancholic'; break;
+        case 0:     echo 'neutral'; break;
+        case 1:     echo 'happy'; break;
+        } 
+        break;
+    case -1:
+        switch($_SESSION['energy']) {
+        case -1:    echo 'sad'; break;
+        case 0:     echo 'relaxing'; break;  // relaxing
+        case 1:     echo 'mellow'; break;
+        } 
+        break;
+    default:
+        echo 'neutral'+$_SESSION["speed"]+""+$_SESSION["energy"];
     }
-    if(empty($track) && !mt_rand(0,1)) {
+    break;
+default:
+    if(mt_rand(0,2)) { //50% // 80%
+        if(empty($track)) {
+            // Get conform music which is forced by dj and is in time
+            $query = "genre REGEXP '.*".$_GET["genre"].".*'";
+            if($_GET["energy"]!=0)
+                $query .= " and energy".(intval($_GET['energy'])>0?'>':'<')."0 ";
+            if($_GET["speed"]!=0)
+                $query .= " and speed".(intval($_GET['speed'])>0?'>':'<')."0 ";
+            $query .= " and forcedbydj>0 and".
+                " timeforced+duration>".time()." and".
+                " ".time().">timeforced ORDER BY timeforced ASC LIMIT 1";
+            $track = $db->queryArray("SELECT * FROM track WHERE ".$query);
+            if(isset($track))
+                $track["debug"] = "forced";
+        }
+    }
+    if(!mt_rand(0,2) && empty($track)) {
         // Get conform music
         $query = "genre REGEXP '.*".$_GET["genre"].".*'";
         if($_GET["energy"]!=0)
@@ -151,7 +190,7 @@ default:
         if(isset($track))
             $track["debug"] = "conform";
     }
-    if(empty($track) && mt_rand(0,1)) {
+    if(mt_rand(0,3)==0) {
         if(empty($track)) {
             // Get forced tracks in time which haven't been assigned to any mood
             $query = "(timesplayed=0 or (speed=0 and energy=0)) and forcedbydj>0".
@@ -163,7 +202,7 @@ default:
                 $track["debug"] = "forced w/o no mood";
         }
     }
-    if(empty($track) && mt_rand(0,1)) {
+    if(mt_rand(0,2)==0) {
         if(empty($track)) {
             // Get old forced tracks with genre which haven't been played yet but may fit to the mood
             $query = "genre REGEXP '.*".$_GET["genre"].".*' ";
@@ -174,7 +213,7 @@ default:
                 $track["debug"] = "old forced never played";
         }
     }
-    if(empty($track) && mt_rand(0,1)) {
+    if(mt_rand(0,2)==0) {
         if(empty($track)) {
             // Get old forced tracks
             $query = "forcedbydj>0";
@@ -202,7 +241,7 @@ default:
     }
     if(empty($track)) {
         // Get some totally random track
-        $track = $db->queryArray("SELECT * FROM track WHERE 1 LIMIT 1".
+        $track = $db->queryArray("SELECT * FROM track WHERE 1 LIMIT ".
             mt_rand(1, $db->queryFirst("SELECT COUNT(*) FROM track WHERE 1")-1).
             ",1");
         if(isset($track))
