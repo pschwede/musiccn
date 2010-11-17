@@ -25,7 +25,7 @@ a,
 a:link,
 a:visited {
 	text-decoration: none;
-    cursor: pointer;
+	cursor: pointer;
 }
 a img{
 	border: hidden;
@@ -111,11 +111,24 @@ h3 {
     height: 100%;
 }
 #song_title, 
-#total_time, 
-#player_pps, 
-#player_volume {
+#total_time {
     width:100%;
-    text-align: left;;
+    text-align: left;
+}
+#player_pps,
+#player_volume {
+    font-size: 23pt;
+}
+#player_pps a,
+#player_volume a {
+    width: 32px;
+}
+#player_pps {
+    text-align: left;
+}
+#player_volume {
+    margin-right: 50%;
+    float: right;
 }
 #album_cover_box img {
 }

@@ -105,16 +105,16 @@
             <div id="player_control">
                 <div id="song_title">Silence</div>
                 <div id="player_pps">
-                    <a id="player_play" style="display:none">(play)</a>
-                    <a id="player_pause">(pause)</a>
-                    <a id="player_stop">(stop)</a>
-                    <a id="player_next">(skip!)</a>
+                    <a id="player_play" style="display: none;" title="Play">&#58131;</a>
+                    <a id="player_pause" title="Pause">&#58138;</a>
+                    <a id="player_stop" title="Stop">&#58139;</a>
+                    <a id="player_next" title="Skip">&#58137;</a>
                 </div>
                 <div id="player_volume">
-                    <a id="player_volume_min">(mute)</a>
-                    <a id="player_volume_down">(-)</a>
-                    <a id="player_volume_up">(+)</a>
-                    <a id="player_volume_max">(loudest)</a>
+                    <a id="player_volume_min" title="Mute">&#58561;</a>
+                    <a id="player_volume_down" title="Volume Down">&#58540;</a>
+                    <a id="player_volume_up" title="Volume Up">&#58538;</a>
+                    <a id="player_volume_max" title="Maximum Volume">&#58562;</a>
                 </div>
                 <div id="play_time"></div>
                 <div id="player_progress">

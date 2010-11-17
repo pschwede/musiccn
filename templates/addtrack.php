@@ -30,7 +30,7 @@ function length_assist_all(num) {
 		}
 	});
 	$("#jplr1").setFile($("#url"+num).attr("value")).play();
-}
+} 
 //-->
 </script>
 <form method="post" action="staff.php?a=add">
