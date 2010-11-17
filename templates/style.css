@@ -28,7 +28,7 @@ a:visited {
 	cursor: pointer;
 }
 a img{
-	border: hidden;
+	border: none;
 }
 a div,
 a:link div h1,
@@ -137,7 +137,7 @@ h3 {
     display:block;
 	float: left;
     background: transparent fixed repeat-y left center;
-    border: none;
+    border-top: 1px solid;
 }
 .track .title {   
     width: 80%;
@@ -147,10 +147,10 @@ h3 {
 .head {
 	margin-top: 5px;
 	font-size:28px;
-	float:none;
+	float: none;
 	text-align:left;
 	height:32px;
-	border:0 hidden;
+	border: none;
 	margin-bottom:0px;
 	overflow:hidden;
 }
@@ -228,7 +228,7 @@ div.album {
 div.album img {
 	height: 100px;
 	width: 100px;
-	border: 0 hidden;
+	border: none;
 	padding:0px;
 }
 

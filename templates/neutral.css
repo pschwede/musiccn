@@ -132,8 +132,8 @@ ul.sf-menu li ul li{
 }
 
 .stripe {
-    border-left: 0 hidden;
-    border-right: 0 hidden;
-    border-top: 1px solid #005aa8;
+    border-left: none;
+    border-right: none;
+    border-top: none;
     border-bottom: 1px solid #005aa8;
 }

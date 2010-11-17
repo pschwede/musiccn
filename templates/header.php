@@ -40,7 +40,7 @@
     <title>Musiccn v1.0 - The different free music discovery machine</title>
     <script type="text/javascript" src="js/jquery-1.3.1.min.js"></script>
     <script type="text/javascript" src="js/superfish.js"></script>
-    <script type="text/javascript" src="js/jquery.jplayer.js"></script>
+    <script type="text/javascript" src="js/jquery.jplayer.min.js"></script>
     <script type="text/javascript" src="js/json2.js"></script>
     <script type="text/javascript">
     var playlist = [];
@@ -56,7 +56,7 @@
                 track = playlist[i];
             }
         }
-        $("#jplr"+currplayer).setFile(track.url).play();
+        $("#jplr"+currplayer).jPlayer("setFile", track.url).jPlayer("play");
         fade(0,currvolume,20,currplayer);
         $("#song_title").fadeOut('fast').text(track.artist+" - "+track.title+" ("+(track.debug?track.debug:'')+")").fadeIn('fast');
         $("#player_interface").css('background-image','url('+track.cover+')');
@@ -93,16 +93,12 @@
     function listened() {
         track = playlist[playlist.length-1];
         if(track) {
-            /*alert('a=listened&trackid='+track.id+
-                    '&energy=<?php echo $_SESSION['energy']; ?>'+
-                    '&speed=<?php echo $_SESSION["speed"]; ?>'+
-                    '&genre=<?php echo $_SESSION["genre"]; ?>');*/
             $.ajax({
                 type:       'GET',
                 url:        'ajax.php',
                 datatype:   'text',
                 data:       'a=listened&trackid='+track.id+
-                    '&energy=<?php echo $_SESSION['energy']; ?>'+
+                    '&energy=<?php echo $_SESSION["energy"]; ?>'+
                     '&speed=<?php echo $_SESSION["speed"]; ?>'+
                     '&genre=<?php echo $_SESSION["genre"]; ?>',
                 success:    function(msg) {
@@ -122,14 +118,14 @@
         dvol = dvol>0 ? dvol : -dvol; // integer abs
         if(from < to && from + dvol < to) {
             from += dvol;
-            $("#jplr"+player).volume(from);
+            $("#jplr"+player).jPlayer("volume", from);
             setTimeout("fade("+from+","+to+","+dvol+","+player+");", 200);
         } else if(from > to && from - dvol > to) {
             from -= dvol;
-            $("#jplr"+player).volume(from);
+            $("#jplr"+player).jPlayer("volume", from);
             setTimeout("fade("+from+","+to+","+dvol+","+player+");", 200);
         } else {
-            $("#jplr"+player).volume(to);
+            $("#jplr"+player).jPlayer("volume", to);
         }
     }
     
@@ -149,7 +145,6 @@
             play(trackid);
         }
         fade(currvolume,0,10,playerA);
-        //fade(0,currvolume,10,playerB); //autorequest is doing this
     }
     
     function pushTrack(skipped) {
@@ -159,16 +154,10 @@
                 '<div style="'+(skipped?'text-decoration: line-through; ':'')+'display:none;" id="'+track.id+'" class="track stripe">'+
                 '<div class="title">'+
                 track.artist+" - "+track.title+
-                '<a href="javascript:replay('+track.id+');">(play again)</a><a href="'+track.via+'" target="_blank">(website)</a>'+
+                '<a href="javascript:replay('+track.id+');">&#9851;</a><a href="'+track.via+'" target="_blank">(website)</a>'+
                 '</div></div>'+"\n"
                 );
             $('#playlist > .track:first').css('background-image','url('+track.cover+')').slideDown('slow');
-            /*if(playlist.length>15) {
-                $('#playlist > .track:last').slideUp('slow', function() {
-                        $(this).remove();
-                });
-                playlist.shift();
-            }*/
         }
     }
     
@@ -190,33 +179,36 @@
                 $("#player_play").show();
             });
             
-            $("#jplr"+player).onProgressChange( function(lp,ppr,ppa,pt,tt) {
+            $("#jplr"+player).jPlayer("onProgressChange", function(lp,ppr,ppa,pt,tt) {
                 s = lp<100?" ("+"loading "+lp+"%)":'';
                 
                 var myTotalTime = new Date(tt-pt);
-                var ttMin = (myTotalTime.getUTCMinutes() < 10) ? "0" + myTotalTime.getUTCMinutes() : myTotalTime.getUTCMinutes();
-                var ttSec = (myTotalTime.getUTCSeconds() < 10) ? "0" + myTotalTime.getUTCSeconds() : myTotalTime.getUTCSeconds();
-                $("#total_time").text(ttMin+":"+ttSec+s);
+                $("#total_time").text($.jPlayer.convertTime(myTotalTime));
                 if(lp>=99 && pt>=tt-3) {
-									listened();
-									pushTrack(false);
-									autorequest();
-								}
+                  listened();
+                  pushTrack(false);
+                  autorequest();
+                }
             });
-            /*$("#jplr"+player).onSoundComplete( function() {
-                listened();
-                pushTrack(false);
-                autorequest();
-            });*/ // somehow inaccurate :/
+            setTimeout("reactOnHangUp(" + $("#jplr"+player).jPlayer("getData", "diag.playedTime") + "," + player + ")", 3000);
         } else {            
-            $("#jplr"+player).onProgressChange( function(lp,ppr,ppa,pt,tt) {});
-            $("#jplr"+player).onSoundComplete( function() {});
+            $("#jplr"+player).jPlayer("onProgressChange", function(lp,ppr,ppa,pt,tt) {})
+            .jPlayer("onSoundComplete", function() {});
         }
+    }
+    
+    function reactOnHangUp(oldt, player) {
+      if(oldt == $("#jplr"+player).jPlayer("getData", "diag.playedTime")) {
+        if(currplayer == 1)
+          crossFade(1,2, true);
+        else
+          crossFade(2,1, true);
+      }
     }
     
     function updateDjList() {
         $.getJSON('ajax.php?a=upcomingdjs'+
-                    '&energy=<?php echo $_SESSION['energy']; ?>'+
+                    '&energy=<?php echo $_SESSION["energy"]; ?>'+
                     '&speed=<?php echo $_SESSION["speed"]; ?>'+
                     '&genre=<?php echo $_SESSION["genre"]; ?>',
                 function(json) {
@@ -282,7 +274,6 @@
 						volume: 0,
 						ready:  function() {
 								autorequest();
-								fade(0,100,20,currplayer);
 								currvolume=100;
 						},
 				});
@@ -290,8 +281,6 @@
 						cssPrefix: "jplayer",
 						volume: 0,
 						ready:  function() {
-								autorequest();
-								fade(0,100,20,currplayer);
 								currvolume=100;
 						},
 				}); 
@@ -303,8 +292,6 @@
                 crossFade(1,2,true);
             else
                 crossFade(2,1,true);
-            /*pushTrack(true); //old
-            autorequest();*/
         });
         $("#player_volume_min").click(function() {
             fade(currvolume,0,50,currplayer);
@@ -332,7 +319,7 @@
     });
     </script>
     <body>
-        <div id="alert" class="alert">
+        <div id="alert" class="alert" style="top:-1;">
             <span>
             <?php echo $alert; ?>
             </span>

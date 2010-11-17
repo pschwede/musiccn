@@ -110,12 +110,12 @@
                     <a id="player_stop" title="Stop">&#58139;</a>
                     <a id="player_next" title="Skip">&#58137;</a>
                 </div>
-                <div id="player_volume">
-                    <a id="player_volume_min" title="Mute">&#58561;</a>
-                    <a id="player_volume_down" title="Volume Down">&#58540;</a>
-                    <a id="player_volume_up" title="Volume Up">&#58538;</a>
-                    <a id="player_volume_max" title="Maximum Volume">&#58562;</a>
-                </div>
+                <!--<div id="player_volume">
+                    <a id="player_volume_min" title="Mute">&#8857;</a>
+                    <a id="player_volume_down" title="Volume Down">&#8854;</a>
+                    <a id="player_volume_up" title="Volume Up">&#8853;</a>
+                    <a id="player_volume_max" title="Maximum Volume">&#8859;</a>
+                </div>//-->
                 <div id="play_time"></div>
                 <div id="player_progress">
                     <div id="player_progress_load_bar">
