@@ -244,9 +244,9 @@
                 $('#alert').text("You are in a "+msg+" mood now.").slideDown('slow');
                 setTimeout("$('#alert').slideUp('slow')", 3000);
                 if(currplayer == 1)
-                  crossFade(1,2);
+                  crossFade(1,2,true);
                 else
-                  crossFade(2,1);
+                  crossFade(2,1,true);
         }
       });
     }
