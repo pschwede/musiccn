@@ -1,21 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="Author" content="Musiccn Team" />
-    <meta name="robots" content="all" />
-    <meta name="description" content="The DIY Web radio station for free music" />
-    <meta name="keywords" content="radio, web, flash, music, stream, free, content, creative, commons, jamendo, request, dj, music" />
-    <meta name="date" content="2009-03-01" />
-    <link rel="stylesheet" type="text/css" href="templates/style.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="templates/neutral.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="templates/player.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="templates/superfish.css" media="screen" />
-    <title>Musiccn v1.0 - The different free music discovery machine</title>
-    <script type="text/javascript" src="js/jquery-1.3.1.min.js"></script>
-    <script type="text/javascript" src="js/superfish.js"></script>
-    <script type="text/javascript" src="js/jquery.jplayer.min.js"></script>
-    <script type="text/javascript" src="js/json2.js"></script>
+<?php include 'globalheader.php'; ?>
     <script type="text/javascript">
     var playlist = [];
     var currplayer = 1;
@@ -138,17 +121,17 @@
     function setupPlayer(player, on) {
         if(on) {
             $("#player_play").click(function() {
-                $("#jplr"+player).play();
+                $("#jplr"+player).jPlayer("play");
                 $("#player_play").hide();
                 $("#player_pause").show();
             });
             $("#player_pause").click(function() {
-                $("#jplr"+player).pause();
+                $("#jplr"+player).jPlayer("pause");
                 $("#player_pause").hide();
                 $("#player_play").show();
             });
             $("#player_stop").click(function() {
-                $("#jplr"+player).stop();
+                $("#jplr"+player).jPlayer("stop");
                 $("#player_pause").hide();
                 $("#player_play").show();
             });
@@ -241,12 +224,36 @@
         datatype:   'text',
         data:       'a=setmood&energy='+energy+'&speed='+speed,
         success:    function(msg) {
-                $('#alert').text("You are in a "+msg+" mood now.").slideDown('slow');
+                $('#alert').text("You are in a "+msg+" mood now.").slideDown('fast');
                 setTimeout("$('#alert').slideUp('slow')", 3000);
-                if(currplayer == 1)
-                  crossFade(1,2,true);
-                else
-                  crossFade(2,1,true);
+                $("body").append("<div id=\"overlay\" />");
+                $("body").css({height:'100%'});
+                $('#overlay')  
+                        .css({  
+                            display: 'none',  
+                            position: 'absolute',  
+                            top:0,  
+                            left: 0,  
+                            width: '100%',  
+                            height: '100%',  
+                            zIndex: 1000,  
+                            background: $("body").css('background-color')+' url(img/loading.gif) no-repeat center'  
+                        })
+                        .fadeIn(500, function() {
+                            $("#moodstyle").attr({href: "templates/styles/"+msg+".css"});
+                          })
+                        .fadeOut(500, function() {
+                          $(this).remove();
+                        });
+                /*$("html").fadeOut("slow", function() {
+                  /*if(currplayer == 1) {
+                    crossFade(1,2,true);
+                  } else {
+                    crossFade(2,1,true);
+                  }
+                  $("#moodstyle").attr({href: "templates/"+msg+".css"});
+                  $(this).fadeIn("slow");
+                  });               */
         }
       });
     }

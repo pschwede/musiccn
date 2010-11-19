@@ -1,0 +1,139 @@
+a,
+a:link,
+a:visited {
+	color:#002d54;
+}
+a:hover{
+	color:#adf;
+}
+a div,
+a:link div h1,
+a:hover div,
+a:visited div{
+	color:#a84;
+}
+
+body {
+	color: #000;
+}
+
+body, 
+#player_control, 
+.track .title   {
+    background: #fff;
+}
+
+div.album {
+	border: 1px solid #4379a8;
+}
+div.album span {
+	color: #4379a8;
+}
+div.album:hover {
+	border: 1px solid #fff;
+	background-color: #4379a8;
+	color: #fff;
+}
+div.album:hover span {
+	color: #fff;
+}
+
+div.menu {
+    background: #005aa8;
+	border-top:1px solid #005aa8;
+	border-bottom:1px solid #005aa8;
+}
+div.menu,
+div.menu a,
+div.menu a:link,
+div.menu a:visited {
+	color: #fff;
+}
+div.menu a:hover {
+	color: #fff;
+}
+
+input[type=text],
+input[type=password] {
+	color: #666;
+	border: 1px solid #666;
+}
+
+input[type=text]:hover,
+input[type=password]:hover {
+	color: #000;
+}
+input[type=text]:focus,
+input[type=password]:focus {
+	color: #000;
+	border: 1px solid #000;
+}
+
+input[type=submit], input[type=reset], select, button{
+	cursor: pointer;
+	color: #000;
+	background-color: #ddd;
+	border-top: 1px solid #eee;
+	border-right: 1px solid #eee;
+	border-left: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+}
+input[type=submit]:hover, input[type=reset]:hover, button:hover{
+	color: #ccc;
+	background-color: #eee;
+	border-top: 1px solid #fff;
+	border-right: 1px solid #fff;
+	border-left: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+}
+
+h3 {
+    background: #4379a8;
+    color: #fff;
+}
+
+hr {
+	border-color:#fff;
+}
+
+ul.sf-menu li ul li{
+    background-color: #005aa8;
+}
+
+.alert {
+	border-bottom: 1px solid #ee6;
+	background-color: #ff9;
+	color: #000;
+}
+
+.box {
+  	border: 1px solid #005aa8;
+}
+.box .highlighted {
+	background:#abf;
+}
+
+.cloud a:link,
+.cloud a:visited {
+	color: #4379a8;
+}
+.cloud a:hover {
+	color: #213b52;
+}
+
+.head {
+	background: transparent url("img/headlogo.png") no-repeat left center;
+	color: #08f;
+}
+.head a,
+.head a:link,
+.head a:visited{
+	color: #005aa8;
+}
+
+.stripe {
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    border-bottom: 1px solid #005aa8;
+}
