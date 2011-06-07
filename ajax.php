@@ -20,25 +20,54 @@ case 'listened':
         }
         if($_GET['energy']!=0 || $_GET['speed']!=0) {
             // make sure neutral players don't mess up the data
-            $sql = "UPDATE track SET ".
-                "energy=(energy * 10+(".intval($_GET['energy']).")) / (11), ".
-                "speed=(speed * 10+(".intval($_GET['speed']).")) / (11), ".
-                "timesplayed=timesplayed+1, ".
-                "forcedbydj=0, ".
-                "lastplayed=".time()." WHERE id=".$_GET['trackid'];
+            $sql = "UPDATE track SET".
+                " energy=(energy * 10+(".intval($_GET['energy']).")) / (11),".
+                " speed=(speed * 10+(".intval($_GET['speed']).")) / (11),".
+                " timesplayed=timesplayed+1,".
+                " forcedbydj=0,".
+                " lastplayed=".time().
+                " WHERE id=".$_GET['trackid'];
         } else {
-            $sql = "UPDATE track SET ".
-                "timesplayed=timesplayed+1, ".
-                "forcedbydj=0, ".
-                "lastplayed=".time()." WHERE id=".$_GET['trackid'];
+            $sql = "UPDATE track SET".
+                " timesplayed=timesplayed+1,".
+                " forcedbydj=0,".
+                " lastplayed=".time().
+                " WHERE id=".$_GET['trackid'];
         }
         echo $db->exec($sql);
         if(!mt_rand(0,5)) {
-			try {
+          try {
                 $identica = new Identica('musiconradio', 'musicon123');
                 $identica->updateStatus("!listen: ".$track->getValue('artist')." - ".$track->getValue('album')." ".$track->getValue('via')." #freemusic");
-            } catch(exception $e) {}
-		}
+          } catch(exception $e) {}
+        }
+    } else echo -1;
+    break;
+case 'skipped':
+    if($_GET['trackid']) {
+        $track = new Track(null, $_GET["trackid"]);
+        /*if($track->getValue('adder')) {
+            $user = new User(null, $track->getValue('adder'));
+            $user->incValueBy('rating',1) or die(-1);
+        }*/
+        if($track->getValue('forcedbydj')) {
+            $user = new User(null, $track->getValue('forcedbydj'));
+            $user->incValueBy('rating',1) or die(-1);
+        }
+        if($_GET['energy']!=0 || $_GET['speed']!=0) {
+            // make sure neutral players don't mess up the data
+            $sql = "UPDATE track SET".
+                " energy=(energy * 10-(".intval($_GET['energy']).")) / (11),".
+                " speed=(speed * 10-(".intval($_GET['speed']).")) / (11),".
+                " forcedbydj=0,".
+                " lastplayed=".time().
+                " WHERE id=".$_GET['trackid'];
+        } else {
+            $sql = "UPDATE track SET".
+                " forcedbydj=0".
+                " WHERE id=".$_GET['trackid'];
+        }
+        echo $db->exec($sql);
     } else echo -1;
     break;
 case 'bestofall':
@@ -174,16 +203,25 @@ default:
     if(!mt_rand(0,2) && empty($track)) {
         // Get conform music
         $query = "genre REGEXP '.*".$_GET["genre"].".*'";
+        $query .= " and lastplayed<".(time()-$db->queryFirst("SELECT SUM(duration) FROM track WHERE 1")/2);
         if($_GET["energy"]!=0)
-            $query .= " and energy".(intval($_GET['energy'])>0?'>':'<')."0 ";
+            $query .= " and energy!=0";
         if($_GET["speed"]!=0)
-            $query .= " and speed".(intval($_GET['speed'])>0?'>':'<')."0 ";
-        $query .= " and lastplayed<".(time()-$db->queryFirst("SELECT SUM(duration) FROM track WHERE 1"));
+            $query .= " and speed!=0";
+        if($_GET["energy"]!=0 || $_GET["energy"]!=0)
+            $query .= " ORDER BY ";
+        if($_GET["energy"]!=0) {
+            $query .= "energy ".(intval($_GET['energy'])>0?'DESC':'ASC');
+            if($_GET["speed"]!=0)
+                $query .= ",";
+        }
+        if($_GET["speed"]!=0)
+            $query .= "speed ".(intval($_GET['speed'])>0?'DESC':'ASC');
         $query .= " LIMIT ".
             mt_rand(0, 
                 $db->queryFirst(
                   "SELECT COUNT(*) FROM track WHERE ".$query
-                  )-1
+                  )/2
                 ).
             ",1";
         $track = $db->queryArray("SELECT * FROM track WHERE ".$query);

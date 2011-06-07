@@ -71,6 +71,30 @@
         }
     }
     
+    function skipped() {
+        track = playlist[playlist.length-1];
+        if(track) {
+            $.ajax({
+                type:       'GET',
+                url:        'ajax.php',
+                datatype:   'text',
+                data:       'a=skipped&trackid='+track.id+
+                    '&energy=<?php echo $_SESSION["energy"]; ?>'+
+                    '&speed=<?php echo $_SESSION["speed"]; ?>'+
+                    '&genre=<?php echo $_SESSION["genre"]; ?>',
+                success:    function(msg) {
+                    if(msg=='1') {
+                        $('#alert').text("Skipping behavior recorded").slideDown('slow');
+                        setTimeout("$('#alert').slideUp('slow')", 3000);
+                    } else {
+                        $('#alert').text("Error during SBR").slideDown('slow');
+                        setTimeout("$('#alert').slideUp('slow')", 3000);
+                    }
+                }
+            });
+        }
+    }
+    
     function fade(from, to, dvol, player) {
         dvol = dvol>0 ? dvol : -dvol; // integer abs
         if(from < to && from + dvol < to) {
@@ -96,6 +120,7 @@
             autorequest();
         else {
             var track = playlist[0];
+            // find the current track
             for(i=0; i<playlist.length && trackid!=track.id; i++)
                 track = playlist[i];
             playlist.push(track);
@@ -104,11 +129,16 @@
         fade(currvolume,0,10,playerA);
     }
     
-    function pushTrack(skipped) {
+    function pushTrack(skipping) {
+        if(skipping) {
+          skipped();
+        } else {
+          listened();
+        }
         if(playlist.length) {
             var track = playlist[playlist.length-1];
             $('#playlist').prepend(
-                '<div style="'+(skipped?'text-decoration: line-through; ':'')+'display:none;" id="'+track.id+'" class="track stripe">'+
+                '<div style="'+(skipping?'text-decoration: line-through; ':'')+'display:none;" id="'+track.id+'" class="track stripe">'+
                 '<div class="title">'+
                 track.artist+" - "+track.title+
                 '<a href="javascript:replay('+track.id+');" title="Replay">&#9851;</a><a href="'+track.via+'" target="_blank" title="Website">&#8984;</a>'+
@@ -142,13 +172,12 @@
                 var myTotalTime = new Date(tt-pt);
                 $("#total_time").text($.jPlayer.convertTime(myTotalTime));
                 if(lp>=99 && pt>=tt-3) {
-                  listened();
                   pushTrack(false);
                   autorequest();
                 }
             });
             setTimeout("reactOnHangUp(" + $("#jplr"+player).jPlayer("getData", "diag.playedTime") + "," + player + ")", 4000);
-        } else {            
+        } else {
             $("#jplr"+player).jPlayer("onProgressChange", function(lp,ppr,ppa,pt,tt) {})
             .jPlayer("onSoundComplete", function() {});
         }

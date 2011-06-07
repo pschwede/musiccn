@@ -53,7 +53,7 @@
             </ul>
         </li>
         <li>
-            DJs
+            Backstage
             <ul>
                 <li>
                     <a href="staff.php?a=login" target="_blank">Login</a>
@@ -63,9 +63,9 @@
                 </li>
             </ul>
         </li>
-        <li>
+        <!--<li>
             <a href="index.php?a=faq" target="_blank">FAQ</a>
-        </li>
+        </li>//-->
     </ul>
 </div>
 <div class="jquery_jplayer"></div>
@@ -78,10 +78,10 @@
             <div id="player_control">
                 <div id="song_title">Silence</div>
                 <div id="player_pps">
-                    <a id="player_play" style="display: none;" title="Play">&#58131;</a>
-                    <a id="player_pause" title="Pause">&#58138;</a>
-                    <a id="player_stop" title="Stop">&#58139;</a>
-                    <a id="player_next" title="Skip">&#58137;</a>
+                    <a id="player_play" style="display: none;" title="Play">Play</a>
+                    <a id="player_pause" title="Pause">Pause</a>
+                    <!--<a id="player_stop" title="Stop">&#11035;</a>//-->
+                    <a id="player_next" title="Skip">Next</a>
                 </div>
                 <!--<div id="player_volume">
                     <a id="player_volume_min" title="Mute">&#8857;</a>

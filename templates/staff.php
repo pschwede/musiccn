@@ -37,14 +37,16 @@ $user = new User(null, $_SESSION['id']);
         <ol style="list-style-type:decimal outside;">
         <?php
         $i = 1;
-        foreach($user->mostSuccessfullTracks() as $track) {
-            echo '<div class="" style="width: 100%;">'.
-                '<div style="text-align:right; width: 3em; padding-right: 10px">'.$i.'</div>'.
-                '<div class="title">'.
-                $track->getValue('artist').' - '.$track->getValue('title').'</div>'.
-                '<div style="float:right; padding-right: 10px" class="stats">'.$track->getValue('timesplayed').'x; '.($track->getValue('lastplayed')==0?'never':date('z, G:i:s',time()-$track->getValue('lastplayed')-3600).' ago').'</div>'.
-                '</div>';
-            $i++;
+        if($user->mostSuccessfullTracks()) {
+          foreach($user->mostSuccessfullTracks() as $track) {
+              echo '<div class="" style="width: 100%;">'.
+                  '<div style="text-align:right; width: 3em; padding-right: 10px">'.$i.'</div>'.
+                  '<div class="title">'.
+                  $track->getValue('artist').' - '.$track->getValue('title').'</div>'.
+                  '<div style="float:right; padding-right: 10px" class="stats">'.$track->getValue('timesplayed').'x; '.($track->getValue('lastplayed')==0?'never':date('z, G:i:s',time()-$track->getValue('lastplayed')-3600).' ago').'</div>'.
+                  '</div>';
+              $i++;
+          }
         }
         ?>
         </ol>
