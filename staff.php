@@ -101,7 +101,7 @@ if($_SESSION['online']) {
         $success = true;
         $successnum = 0;
         $num = count($_POST['tracknum']);
-        for($i=0; $i<$num && $success; $i++) {
+        for($i=0; $i<$num; $i++) {
             $t = new Track(
                 array(
                     'title'     =>  $_POST['title'][$i],
@@ -117,19 +117,19 @@ if($_SESSION['online']) {
                     )
                 );
             $stdb = $t->submitToDatabase();
-            $success &= $stdb>0;
-            $successnum += $stdb;
+            if($stdb>0)
+                $successnum += 1;
         }
-        if($successnum/$num>1) {
-            $alert = "Success! But some tracks were already there!";
+        if($successnum < $num) {
+            $alert = "Some tracks couldn't be added. Were they already there?";
         } elseif($successnum == $num) {
             /*try {
                 $identica = new Identica('musiconradio', 'musicon123');
                 $identica->updateStatus("New Album: ".$t->getValue('artist')." - ".$t->getValue('album')." http://music.on.lc #freemusic");
             } catch(exception $e) {}*/
-            $alert = "You successfully added $i new tracks!";
+            $alert = "You successfully added $successnumi new tracks!";
         } else {
-            $alert = "Unsuccessful! Only $i tracks added.";
+            $alert = "Unsuccessful! Only $successnum tracks added.";
         }
 			} else $alert = "Unsuccessful! Wrong answer to antibot question. (".$_POST['answer']."==".$_POST['question'].")";
         include("templates/staffheader.php");
