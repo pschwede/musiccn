@@ -37,7 +37,7 @@ class Radio {
             if($key != 'id')
                 $query .= $key.' = '.$val.', ';
         }
-        $query .= 'PRIMARY KEY (id)'
+        $query .= 'PRIMARY KEY (id)';
         $db->exec($query);
     }
     

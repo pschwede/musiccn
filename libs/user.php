@@ -94,6 +94,7 @@ class User {
     
     public function mostSuccessfullTracks() {
         $db = new Database();
+				$tracks = [];
         $ids = $db->queryArrays("SELECT id FROM track WHERE ".
             "adder=".$this->_data['id']." ".
             "ORDER BY timesplayed DESC, lastplayed DESC LIMIT 10");

@@ -234,7 +234,7 @@ default:
             $query = "(timesplayed=0 or (speed=0 and energy=0)) and forcedbydj>0".
                 " and timeforced+duration>".time().
                 " and ".time().">timeforced ORDER BY timeforced DESC";
-            $query .= " LIMIT ".mt_rand(0,$db->queryFirst("SELECT COUNT(*) FROM track WHERE ".$query)-1).",1";
+            $query .= " LIMIT ".mt_rand(0,$db->queryFirst("SELECT COUNT(*) FROM track WHERE ".$query)).",1";
             $track = $db->queryArray("SELECT * FROM track WHERE ".$query);
             if(isset($track))
                 $track["debug"] = "forced w/o no mood";
@@ -245,7 +245,7 @@ default:
             // Get old forced tracks with genre which haven't been played yet but may fit to the mood
             $query = "genre REGEXP '.*".$_GET["genre"].".*' ";
             $query .= " and timesplayed=0 and forcedbydj>0";
-            $query .= " LIMIT ".mt_rand(0,$db->queryFirst("SELECT COUNT(*) FROM track WHERE ".$query)-1).",1";
+            $query .= " LIMIT ".mt_rand(0,$db->queryFirst("SELECT COUNT(*) FROM track WHERE ".$query)).",1";
             $track = $db->queryArray("SELECT * FROM track WHERE ".$query);
             if(isset($track))
                 $track["debug"] = "old forced never played";
@@ -255,7 +255,7 @@ default:
         if(empty($track)) {
             // Get old forced tracks
             $query = "forcedbydj>0";
-            $query .= " LIMIT ".mt_rand(0,$db->queryFirst("SELECT COUNT(*) FROM track WHERE ".$query)-1).",1";
+            $query .= " LIMIT ".mt_rand(0,$db->queryFirst("SELECT COUNT(*) FROM track WHERE ".$query)).",1";
             $track = $db->queryArray("SELECT * FROM track WHERE ".$query);
             if(isset($track))
                 $track["debug"] = "old forced never played";
@@ -264,7 +264,7 @@ default:
     if(empty($track)) {   
         // Get random unplayed track with genre
         $track = $db->queryArray("SELECT * FROM track WHERE genre REGEXP '.*".$_GET["genre"].".*' and timesplayed=0 and forcedbydj>0 LIMIT ".
-            mt_rand(1, $db->queryFirst("SELECT COUNT(*) FROM track WHERE genre REGEXP '.*".$_GET["genre"].".*'")-1).
+            mt_rand(1, $db->queryFirst("SELECT COUNT(*) FROM track WHERE genre REGEXP '.*".$_GET["genre"].".*'")).
             ",1");
         if(isset($track))
             $track["debug"] = "random forced w/ genre";

@@ -127,7 +127,7 @@ if($_SESSION['online']) {
                 $identica = new Identica('musiconradio', 'musicon123');
                 $identica->updateStatus("New Album: ".$t->getValue('artist')." - ".$t->getValue('album')." http://music.on.lc #freemusic");
             } catch(exception $e) {}*/
-            $alert = "You successfully added $successnumi new tracks!";
+            $alert = "You successfully added $successnum new tracks!";
         } else {
             $alert = "Unsuccessful! Only $successnum tracks added.";
         }

@@ -1,9 +1,9 @@
 <?php
 
 class Database {
-    private $_db_user	= "spz@1";
-    private $_db_pwd	= "PkiluHP";
-    private $_db_name   = "spz@1-musiccn";
+    private $_db_user	= "root";
+    private $_db_pwd	= "dummy";
+    private $_db_name   = "musiccn";
     private $_db_url    = "localhost";
     private $_db;
     
@@ -37,6 +37,7 @@ class Database {
     /** Loads array of results of the MYSQL-Query from Database
     **/
     public function queryArray($sql, $mode=MYSQLI_ASSOC) {
+			  $return = "";
         if($res = $this->_db->query($sql)) {
             try {
                 $return = $res->fetch_array($mode);
